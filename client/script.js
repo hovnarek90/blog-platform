@@ -9,10 +9,14 @@ const saveBtn = document.getElementById("save-btn");
 const closeBtn = document.querySelector(".close-btn");
 
 let currentPostId = null;
-function openModal(title, post = {}) {
+
+function openModal(title, post = {}, isViewOnly = false) {
   modalTitle.textContent = title;
   postTitleInput.value = post.title || "";
   postContentInput.value = post.content || "";
+  postTitleInput.disabled = isViewOnly;
+  postContentInput.disabled = isViewOnly;
+  saveBtn.style.display = isViewOnly ? "none" : "block";
   modal.classList.remove("hidden");
 }
 
@@ -20,6 +24,9 @@ function closeModal() {
   modal.classList.add("hidden");
   postTitleInput.value = "";
   postContentInput.value = "";
+  postTitleInput.disabled = false;
+  postContentInput.disabled = false;
+  saveBtn.style.display = "block";
   currentPostId = null;
 }
 
@@ -52,17 +59,16 @@ async function fetchPosts() {
     .map(
       (post) => `
       <div class="post">
-  <h2>${post.title}</h2>
-  <p>${post.content.substring(0, 100)}...</p>
-  <div class="post-buttons">
-    <button onclick="viewPost('${post._id}')">View</button>
-    <button onclick="openEditModal('${post._id}')">Edit</button>
-    <button class="delete-btn" onclick="deletePost('${
-      post._id
-    }')">Delete</button>
-  </div>
-</div>
-
+        <h2>${post.title}</h2>
+        <p>${post.content.substring(0, 100)}...</p>
+        <div class="post-buttons">
+          <button onclick="viewPost('${post._id}')">View</button>
+          <button onclick="openEditModal('${post._id}')">Edit</button>
+          <button class="delete-btn" onclick="deletePost('${
+            post._id
+          }')">Delete</button>
+        </div>
+      </div>
     `
     )
     .join("");
@@ -109,28 +115,5 @@ async function deletePost(id) {
 async function viewPost(id) {
   const response = await fetch(`${API_URL}/${id}`);
   const post = await response.json();
-  openModal("View Post", post);
-  saveBtn.style.display = "none";
-  postTitleInput.disabled = true;
-  postContentInput.disabled = true;
-  postTitleInput.value = post.title;
-  postContentInput.value = post.content;
+  openModal("View Post", post, true);
 }
-
-async function editPost(id) {
-  const response = await fetch(`${API_URL}/${id}`);
-  const post = await response.json();
-  openEditModal(id);
-  if (title && content) {
-    await fetch(`${API_URL}/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ title, content }),
-    });
-    fetchPosts();
-  }
-}
-
-fetchPosts();
