@@ -43,3 +43,74 @@ The **Blog Platform** is a simple web application that allows users to manage bl
    ```bash
    git clone https://github.com/hovnarek90/blog-platform.git
    cd blog-platform
+   ```
+
+2. Install dependencies for the server:
+   ```bash
+   cd server
+   npm install
+   ```
+
+3. Install dependencies for the client (if applicable):
+   ```bash
+   cd client
+   npm install
+   ```
+
+## Usage
+
+### Starting the Server
+
+1. Navigate to the root directory of the server:
+   ```bash
+   cd server
+   ```
+2. Start the server using Node.js:
+   ```bash
+   node app.js
+   ```
+3. The server will run at `http://localhost:3000` (or the configured port).
+
+### Running the Client
+
+1. Navigate to the client folder:
+   ```bash
+   cd client
+   ```
+2. Open the `index.html` file using a live server or HTTP server:
+   - **Option 1:** Use a live server extension in your code editor (e.g., Visual Studio Code).
+   - **Option 2:** Use an HTTP server tool like `http-server`:
+     ```bash
+     npx http-server .
+     ```
+3. Access the client in your web browser at `http://127.0.0.1:8080` (or the address provided by your live server).
+
+## File Structure
+
+```
+root/
+|-- server/          # Backend code
+|   |-- app.js       # Main server file
+|   |-- package.json # Server dependencies
+|
+|-- client/          # Frontend code
+|   |-- index.html   # Main HTML file
+|   |-- styles.css   # Stylesheet
+|   |-- script.js    # Client-side JavaScript
+|
+|-- README.md        # Documentation
+```
+
+## Configuration
+
+- Ensure that the database connection string is properly configured in the server code.
+- For Firebase integration, ensure you configure your Firebase project in the client-side code.
+
+## Contributing
+
+Contributions are welcome! Please fork the repository and submit a pull request for any improvements or features you want to add.
+
+## License
+
+This project is licensed under the MIT License. Feel free to use and modify it as per your needs.
+
