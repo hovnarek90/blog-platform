@@ -1,3 +1,18 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+  text-transform: capitalize;
+  text-decoration: none;
+  transition: all 0.2s linear;
+}
+:root {
+  --green-post-btn: #28a745;
+  --green-post-btn-hover: #218838;
+  --green-post-btn-active: #1e7e34;
+}
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -17,7 +32,7 @@ header h1 {
   margin: 0;
 }
 #new-post-btn {
-  background-color: #28a745;
+  background-color: var(--green-post-btn);
   color: #fff;
   border: none;
   padding: 0.5rem 1rem;
@@ -28,134 +43,105 @@ header h1 {
 }
 
 #new-post-btn:hover {
-  background-color: #218838;
+  background-color: var(--green-post-btn-hover);
   transform: scale(1.05);
 }
 
 #new-post-btn:active {
-  background-color: #1e7e34;
+  background-color: var(--green-post-btn-active);
   transform: scale(0.95);
 }
 
-button {
-  background: #007bff;
-  color: #fff;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-}
-
-button:hover {
-  background: #007bff;
-}
-
-main {
-  padding: 1rem;
-}
-/* General card styles */
-.post {
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  background-color: #fff;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.post:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-}
-
-/* Title styling */
-.post h2 {
-  margin: 0 0 1rem;
-  font-size: 1.5rem;
-  color: #333;
-}
-
-/* Content preview styling */
-.post p {
-  margin: 0 0 1rem;
-  color: #555;
-  line-height: 1.6;
-  font-size: 1rem;
-}
-
-/* Button styles */
-.post button {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  margin-right: 0.5rem;
-}
-
-/* Individual button colors */
-.post button:nth-child(1) {
-  background-color: #007bff; /* View - Blue */
-  color: #fff;
-}
-
-.post button:nth-child(1):hover {
-  background-color: #0056b3;
-}
-
-.post button:nth-child(2) {
-  background-color: #ffc107; /* Edit - Yellow */
-  color: #000;
-}
-
-.post button:nth-child(2):hover {
-  background-color: #e0a800;
-}
-
-.post button.delete-btn {
-  background-color: #dc3545; /* Delete - Red */
-  color: #fff;
-}
-
-.post button.delete-btn:hover {
-  background-color: #a71d2a;
-}
-
-/* Responsive grid alignment for buttons */
-.post-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-/* Optional: For making posts container more visually aligned */
 #posts {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1.5rem;
+  padding: 1rem;
+  justify-content: center;
 }
 
-.delete-btn {
-  background-color: red;
+.post {
+  width: 300px;
+  height: 300px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.post:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.post h2 {
+  font-size: 1.25rem;
+  color: #333;
+  margin: 1rem;
+  text-align: center;
+}
+
+.post p {
+  font-size: 2rem;
+  color: #666;
+  line-height: 1.4;
+  margin: 0 1rem;
+  text-align: justify;
+  max-height: 100px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.post .date {
+  font-size: 0.9rem;
+  color: #999;
+  margin: 1rem;
+  text-align: center;
+}
+.post-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-top: 1px solid #ddd;
+  background: #f9f9f9;
+}
+
+.post-buttons button {
+  flex: 1;
+  background: linear-gradient(45deg, #6a5acd, #7b68ee);
   color: #fff;
   border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
+  border-radius: 20px;
+  padding: 0.6rem;
+  font-size: 0.9rem;
+  font-weight: bold;
   cursor: pointer;
-  font-size: 1rem;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s, transform 0.2s;
 }
 
-.delete-btn:hover {
-  background-color: darkred;
+.post-buttons button:hover {
+  background: linear-gradient(45deg, #483d8b, #6a5acd);
+  transform: scale(1.05);
+}
+.post-buttons .edit-btn {
+  background: linear-gradient(45deg, #7593af, #476f95);
 }
 
-#posts {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1rem;
+.post-buttons .edit-btn:hover {
+  background: linear-gradient(45deg, #5c7e99, #476f95);
+}
+.post-buttons .delete-btn {
+  background: linear-gradient(45deg, #ff6b6b, #ff4040);
+}
+
+.post-buttons .delete-btn:hover {
+  background: linear-gradient(45deg, #c73838, #ff4040);
 }
 
 .modal {
@@ -239,4 +225,11 @@ textarea:focus {
 
 #save-btn:hover {
   background: #218838;
+}
+
+@media screen and (max-width: 670px) {
+  .post {
+    width: 100%;
+    height: auto;
+  }
 }

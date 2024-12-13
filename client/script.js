@@ -61,9 +61,14 @@ async function fetchPosts() {
       <div class="post">
         <h2>${post.title}</h2>
         <p>${post.content.substring(0, 100)}...</p>
+        <p class="date">${new Date(post.createdAt).toLocaleString()}</p>
         <div class="post-buttons">
-          <button onclick="viewPost('${post._id}')">View</button>
-          <button onclick="openEditModal('${post._id}')">Edit</button>
+          <button class="view-btn" onclick="viewPost('${
+            post._id
+          }')">View</button>
+          <button class="edit-btn" onclick="openEditModal('${
+            post._id
+          }')">Edit</button>
           <button class="delete-btn" onclick="deletePost('${
             post._id
           }')">Delete</button>
