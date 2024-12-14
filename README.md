@@ -85,6 +85,14 @@ The **Blog Platform** is a simple web application that allows users to manage bl
      ```
 3. Access the client in your web browser at `http://127.0.0.1:8080` (or the address provided by your live server).
 
+---
+
+### Explanation:
+
+- **`config.js`**: This file holds the real environment variables like API URLs. It can be used throughout your project.
+- **`example.config.js`**: This is a template configuration file. When setting up the project for the first time, users can rename this file to `config.js` and fill it with their own values.
+
+
 ## File Structure
 
 ```

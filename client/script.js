@@ -1,4 +1,19 @@
-const API_URL = "http://localhost:5000/api/posts";
+
+const API_URL = ENV.API_URL;
+
+console.log(API_URL); 
+async function fetchPosts() {
+  try {
+    const response = await fetch(API_URL);
+    const posts = await response.json();
+    console.log("Posts:", posts);
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+  }
+}
+
+fetchPosts();
+
 
 const postsContainer = document.getElementById("posts");
 const modal = document.getElementById("modal");

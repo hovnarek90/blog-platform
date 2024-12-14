@@ -8,15 +8,18 @@
   text-decoration: none;
   transition: all 0.2s linear;
 }
+
 :root {
   --green-post-btn: #28a745;
   --green-post-btn-hover: #218838;
   --green-post-btn-active: #1e7e34;
+
 }
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  background-color: var(--bodyColor);
 }
 
 header {
@@ -229,7 +232,7 @@ textarea:focus {
 
 @media screen and (max-width: 670px) {
   .post {
-    width: 100%;
-    height: auto;
+    width: 100;
   }
 }
+

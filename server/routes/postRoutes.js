@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const Post = require("../models/Post");
 
+
 // Create a new post
 router.post("/", async (req, res) => {
   console.log(req.body, "req.body+++++++++");

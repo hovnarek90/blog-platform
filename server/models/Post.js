@@ -1,10 +1,14 @@
-// server/models/Post.js
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const PostSchema = new mongoose.Schema({
+const PostSchema = new mongoose.Schema(
+  {
     title: { type: String, required: true },
     content: { type: String, required: true },
-    createdAt: { type: Date, default: Date.now },
-});
+    // author: { type: String, required: true },
 
-module.exports = mongoose.model('Post', PostSchema);
+  },
+  { timestamps: true }
+);
+// console.log("Post model initialized", PostSchema);
+
+module.exports = mongoose.model("Post", PostSchema);
