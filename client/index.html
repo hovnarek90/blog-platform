@@ -7,28 +7,70 @@
     <title>Blog Platform</title>
   </head>
   <body>
+    <header>
+      <h1>Blog Platform</h1>
+      <div id="auth-buttons">
+        <button id="register-btn" class="auth-btn">Register</button>
+        <button id="login-btn" class="auth-btn">Login</button>
+        <button id="logout-btn" class="auth-btn hidden">Logout</button>
+        <button id="new-post-btn">New Post</button>
+      </div>
+    </header>
+
+    <main>
+      <div id="posts" class="posts-container"></div>
+    </main>
+
+    <!-- Modal -->
     <div id="modal" class="modal hidden">
       <div class="modal-content">
         <span class="close-btn">&times;</span>
-        <h2 id="modal-title">New Post</h2>
-        <label for="post-title">Title:</label>
-        <input type="text" id="post-title" />
-        <label for="post-content">Content:</label>
-        <textarea id="post-content"></textarea>
+        <h2 id="modal-title"></h2>
+        <form id="post-form">
+          <label for="post-title">Title</label>
+          <input type="text" id="post-title" required />
 
-        <button id="save-btn">Save</button>
+          <label for="post-content">Content</label>
+          <textarea id="post-content" rows="5" required></textarea>
+
+          <button type="button" id="save-btn">Save</button>
+        </form>
       </div>
     </div>
 
-    <header>
-      <h1>Blog Platform</h1>
-      <button id="new-post-btn">New Post</button>
-    </header>
-    <main>
-      <section id="posts"></section>
-    </main>
+    <div id="login-modal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close-login-btn">&times;</span>
+        <h2>Login</h2>
+        <form id="login-form">
+          <label for="username">Username</label>
+          <input type="text" id="username" required />
+
+          <label for="password">Password</label>
+          <input type="password" id="password" required />
+
+          <button type="button" id="login-submit">Login</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="register-modal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close-register-btn">&times;</span>
+        <h2>Register</h2>
+        <form id="register-form">
+          <label for="register-username">Username</label>
+          <input type="text" id="register-username" required />
+
+          <label for="register-password">Password</label>
+          <input type="password" id="register-password" required />
+
+          <button type="button" id="register-submit">Register</button>
+        </form>
+      </div>
+    </div>
 
     <script src="config.js"></script>
-    <script src="script.js"></script>
+    <script src="script.js" ></script>
   </body>
 </html>
