@@ -8,7 +8,9 @@
   text-decoration: none;
   transition: all 0.2s linear;
 }
-
+.hidden {
+  display: none;
+}
 :root {
   --green-post-btn: #28a745;
   --green-post-btn-hover: #218838;
@@ -80,10 +82,7 @@ header h1 {
   transform: scale(0.95);
 }
 
-/* Align login/logout with header for consistency */
-#login-modal ,#register-modal .modal-content {
-  width: 350px;
-}
+
 
 #login-form input, #register-form input {
   width: 100%;
