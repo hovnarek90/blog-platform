@@ -38,7 +38,7 @@ header h1 {
 
 /* Login/Logout button styles */
 .close-btn,
-.close-login-btn ,
+.close-login-btn,
 .close-register-btn {
   position: absolute;
   top: 10px;
@@ -75,47 +75,26 @@ header h1 {
   background-color: #0056b3;
   transform: scale(1.05);
 }
-
+#logout-btn{
+  background-color: red;
+}
+#logout-btn:hover{
+  background-color: rgb(150, 0, 0);
+}
 #login-btn:active,
 #logout-btn:active {
   background-color: #003f7f;
   transform: scale(0.95);
 }
 
-
-
-#login-form input, #register-form input {
-  width: 100%;
-}
-
-#login-submit ,#register-submit {
-  width: 100%;
-  background-color: #28a745;
-  color: white;
-  font-size: 16px;
-  padding: 10px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-#login-submit:hover
-
-#register-submit:hover {
-  background-color: #218838;
-}
-#login-modal .modal-content ,#register-modal .modal-content {
-  width: 350px;
-}
-
-#login-form input
+#login-form input,
 #register-form input {
   width: 100%;
 }
 
-#login-submit
+#login-submit,
 #register-submit {
+  width: 100%;
   background-color: #28a745;
   color: white;
   font-size: 16px;
@@ -126,8 +105,30 @@ header h1 {
   cursor: pointer;
 }
 
-#login-submit:hover
-#register-submit:hover {
+#login-submit:hover #register-submit:hover {
+  background-color: #218838;
+}
+#login-modal .modal-content,
+#register-modal .modal-content {
+  width: 350px;
+}
+
+#login-form input #register-form input {
+  width: 100%;
+}
+
+#login-submit #register-submit {
+  background-color: #28a745;
+  color: white;
+  font-size: 16px;
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#login-submit:hover #register-submit:hover {
   background-color: #218838;
 }
 /* --------- */
@@ -299,10 +300,8 @@ textarea {
   border-radius: 5px;
   font-size: 1rem;
   font-family: Arial, sans-serif;
-}
-
-textarea {
   resize: none;
+  text-transform: lowercase;
 }
 
 input:focus,
@@ -337,6 +336,7 @@ textarea:focus {
   #register-btn {
     margin: 0;
   }
+  
 
   #login-btn,
   #logout-btn,

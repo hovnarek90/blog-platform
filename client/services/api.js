@@ -1,10 +1,20 @@
-export const login = async (username, password) => {
-  const response = await fetch("/auth/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password }),
+// api.js
+import { API_URL, AUTH_URL } from "../services/config.js";
+
+// Generic function for making API calls
+export async function apiRequest(url, method = "GET", body = null, token = null) {
+  const headers = { "Content-Type": "application/json" };
+  if (token) headers["Authorization"] = `Bearer ${token}`;
+
+  const response = await fetch(url, {
+    method,
+    headers,
+    body: body ? JSON.stringify(body) : null,
   });
 
-  if (!response.ok) throw new Error("Login failed");
-  return response.json(); // Returns { token: "..." }
-};
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || "An error occurred");
+  }
+  return await response.json();
+}

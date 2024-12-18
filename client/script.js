@@ -7,12 +7,10 @@ const postTitleInput = document.getElementById("post-title");
 const postContentInput = document.getElementById("post-content");
 const saveBtn = document.getElementById("save-btn");
 const closeBtn = document.querySelector(".close-btn");
-
 const loginModal = document.getElementById("login-modal");
 const registerModal = document.getElementById("register-modal");
 const closeLoginBtn = document.querySelector(".close-login-btn");
 const closeRegisterBtn = document.querySelector(".close-register-btn");
-
 const loginBtn = document.getElementById("login-btn");
 const registerBtn = document.getElementById("register-btn");
 const logoutBtn = document.getElementById("logout-btn");
@@ -38,25 +36,24 @@ function updateAuthUI() {
     newPostBtn.classList.add("hidden");
   }
 }
-updateAuthUI();
 
 // LOGIN FUNCTION
 async function loginUser() {
   const username = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value.trim();
-
+  
   if (!username || !password) {
     alert("Please enter valid credentials.");
     return;
   }
-
+  
   try {
     const response = await fetch(`${AUTH_URL}/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
     });
-
+    
     const data = await response.json();
     if (response.ok) {
       localStorage.setItem("token", data.token);
@@ -77,12 +74,12 @@ async function loginUser() {
 async function registerUser() {
   const username = document.getElementById("register-username").value.trim();
   const password = document.getElementById("register-password").value.trim();
-
+  
   if (!username || !password) {
     alert("Please enter valid credentials.");
     return;
   }
-
+  
   try {
     const response = await fetch(`${AUTH_URL}/register`, {
       method: "POST",
@@ -90,9 +87,12 @@ async function registerUser() {
       body: JSON.stringify({ username, password }),
     });
     const data = await response.json();
-
+    
     if (response.ok) {
-      alert("Registration successful! You can now log in.");
+      localStorage.setItem("token", data.token);
+      isAuthenticated = true;
+      updateAuthUI();
+      fetchPosts();
       registerModal.classList.add("hidden");
     } else {
       throw new Error(data.message || "Registration failed");
@@ -107,10 +107,8 @@ function logoutUser() {
   localStorage.removeItem("token");
   isAuthenticated = false;
   updateAuthUI();
-  alert("You have been logged out.");
   fetchPosts();
 }
-
 
 // POST MANAGEMENT
 
@@ -118,32 +116,33 @@ async function fetchPosts() {
   try {
     const response = await fetch(API_URL);
     if (!response.ok) throw new Error("Failed to fetch posts");
-
+    
     const posts = await response.json();
     postsContainer.innerHTML = posts
-      .map(
-        (post) => `
-          <div class="post">
-            <h2>${post.title}</h2>
-            <p>${post.content.substring(0, 100)}...</p>
-            <p class="date">${new Date(post.createdAt).toLocaleString()}</p>
-            <div class="post-buttons">
-              <button onclick="viewPost('${post._id}')">View</button>
-              ${
-                isAuthenticated
-                  ? `<button onclick="openEditModal('${post._id}')">Edit</button>
-                     <button onclick="deletePost('${post._id}')">Delete</button>`
-                  : ""
-              }
-            </div>
-          </div>`
-      )
-      .join("");
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    
+    .map(
+      (post) => `
+      <div class="post">
+      <h2>${post.title}</h2>
+      <p>${post.content.substring(0, 100)}...</p>
+      <p class="date">${new Date(post.createdAt).toLocaleString()}</p>
+      <div class="post-buttons">
+      <button onclick="viewPost('${post._id}')">View</button>
+      ${
+        isAuthenticated
+        ? `<button class="edit-btn" onclick="openEditModal('${post._id}')">Edit</button>
+        <button class="delete-btn" onclick="deletePost('${post._id}')">Delete</button>`
+        : ""
+      }
+      </div>
+      </div>`
+    )
+    .join("");
   } catch (error) {
     alert(error.message);
   }
 }
-fetchPosts();
 
 async function createPost(post) {
   try {
@@ -180,6 +179,7 @@ async function updatePost(id, post) {
     alert(error.message);
   }
 }
+
 
 async function deletePost(id) {
   try {
@@ -219,7 +219,6 @@ function openEditModal(id) {
       postContentInput.disabled = false;
       saveBtn.classList.remove("hidden");
     });
-    
 }
 
 function openModal(title, post = {}) {
@@ -277,3 +276,6 @@ newPostBtn.addEventListener("click", () => {
 registerSubmit.addEventListener("click", registerUser);
 loginSubmit.addEventListener("click", loginUser);
 
+
+updateAuthUI();
+fetchPosts();
