@@ -1,5 +1,5 @@
 // auth.js
-import { fetchPosts } from "./posts.js";
+import { fetchPosts, openModal } from "./posts.js";
 import { AUTH_URL } from "../config.js";
 
 let isAuthenticated = localStorage.getItem("token") !== null;
@@ -27,6 +27,8 @@ function updateAuthUI() {
     logoutBtn.classList.add("hidden");
     newPostBtn.classList.add("hidden");
   }
+
+  fetchPosts();
 }
 
 // LOGIN FUNCTION
@@ -50,10 +52,8 @@ async function loginUser() {
     if (response.ok) {
       localStorage.setItem("token", data.token);
       isAuthenticated = true;
-      updateAuthUI();
-      alert("Login successful!");
       loginModal.classList.add("hidden");
-      fetchPosts();
+      updateAuthUI();
     } else {
       throw new Error(data.message || "Login failed");
     }
@@ -83,7 +83,6 @@ async function registerUser() {
     if (response.ok) {
       localStorage.setItem("token", data.token);
       isAuthenticated = true;
-      updateAuthUI();
       fetchPosts();
       registerModal.classList.add("hidden");
     } else {
@@ -99,7 +98,6 @@ function logoutUser() {
   localStorage.removeItem("token");
   isAuthenticated = false;
   updateAuthUI();
-  fetchPosts();
 }
 
 loginBtn.addEventListener("click", () => {
@@ -123,7 +121,5 @@ closeRegisterBtn.addEventListener("click", () => {
 
 registerSubmit.addEventListener("click", registerUser);
 loginSubmit.addEventListener("click", loginUser);
-
-updateAuthUI();
 
 export { updateAuthUI, loginUser, registerUser, logoutUser, isAuthenticated };

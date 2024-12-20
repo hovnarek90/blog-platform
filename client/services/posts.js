@@ -1,5 +1,6 @@
 import { API_URL } from "../config.js";
 
+
 const postsContainer = document.getElementById("posts");
 const modal = document.getElementById("modal");
 const modalTitle = document.getElementById("modal-title");
@@ -9,19 +10,38 @@ const saveBtn = document.getElementById("save-btn");
 const closeBtn = document.querySelector(".close-btn");
 
 let isAuthenticated = localStorage.getItem("token") ? true : false;
+console.log(isAuthenticated, localStorage.getItem("token"));
 let currentPostId = null;
+let isLoading = false;
 
 document.addEventListener("DOMContentLoaded", () => {
   fetchPosts();
   setupEventListeners();
 });
 
+function showLoader() {
+  const loader = document.getElementById("loader");
+  loader.classList.remove("hidden");
+}
+
+function hideLoader() {
+  const loader = document.getElementById("loader");
+  loader.classList.add("hidden");
+}
+
 async function fetchPosts() {
+  let isAuthenticated = localStorage.getItem("token") ? true : false;
+
+  console.log(localStorage.getItem("token"));
+
   try {
+    isLoading = true;
+    showLoader();
     const response = await fetch(API_URL);
     if (!response.ok) throw new Error("Failed to fetch posts");
 
     const posts = await response.json();
+    console.log(isAuthenticated);
     postsContainer.innerHTML = posts
       .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
       .map(
@@ -44,6 +64,9 @@ async function fetchPosts() {
       .join("");
   } catch (error) {
     alert(error.message);
+  } finally {
+    isLoading = false;
+    hideLoader();
   }
 }
 

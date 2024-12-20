@@ -8,9 +8,7 @@
   text-decoration: none;
   transition: all 0.2s linear;
 }
-.hidden {
-  display: none;
-}
+
 :root {
   --green-post-btn: #28a745;
   --green-post-btn-hover: #218838;
@@ -22,18 +20,39 @@ body {
   padding: 0;
   background-color: var(--bodyColor);
 }
-
+#loader {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  color: #333;
+  z-index: 1000;
+}
+.hidden {
+  display: none;
+}
 header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   background: #333;
   color: #fff;
   padding: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 100;
 }
 
-header h1 {
+header a {
   margin: 0;
+  color: #fff;
+  text-decoration: none;
+  font-size: 2rem;
+  font-weight: bold;
+  cursor: pointer;  
 }
 
 /* Login/Logout button styles */
@@ -75,10 +94,10 @@ header h1 {
   background-color: #0056b3;
   transform: scale(1.05);
 }
-#logout-btn{
+#logout-btn {
   background-color: red;
 }
-#logout-btn:hover{
+#logout-btn:hover {
   background-color: rgb(150, 0, 0);
 }
 #login-btn:active,
@@ -141,6 +160,7 @@ header h1 {
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
+  white-space: nowrap;
 }
 
 #new-post-btn:hover {
@@ -334,9 +354,8 @@ textarea:focus {
   #login-btn,
   #logout-btn,
   #register-btn {
-    margin: 0;
+    margin: 10px 0;
   }
-  
 
   #login-btn,
   #logout-btn,
