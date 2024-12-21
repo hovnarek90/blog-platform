@@ -1,9 +1,7 @@
-// auth.js
 import { fetchPosts, openModal } from "./posts.js";
 import { AUTH_URL } from "../config.js";
 
 let isAuthenticated = localStorage.getItem("token") !== null;
-
 const loginBtn = document.getElementById("login-btn");
 const logoutBtn = document.getElementById("logout-btn");
 const registerBtn = document.getElementById("register-btn");
@@ -49,18 +47,79 @@ async function loginUser() {
     });
 
     const data = await response.json();
+
     if (response.ok) {
+      // Basic client-side token validation
+      if (!data.token || !validateToken(data.token)) {
+        throw new Error("Invalid token received from the server.");
+      }
+
+      // Store token securely
       localStorage.setItem("token", data.token);
+
+      // Update UI or application state
       isAuthenticated = true;
       loginModal.classList.add("hidden");
       updateAuthUI();
     } else {
-      throw new Error(data.message || "Login failed");
+      // Handle server error response
+      const errorMessage = data.message || "Login failed. Please try again.";
+      alert(errorMessage);
     }
+  } catch (error) {
+    console.error("Error logging in:", error);
+    alert(error.message || "An unexpected error occurred. Please try again.");
+  }
+}
+
+// Basic JWT token validation function
+function validateToken(token) {
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1])); // Decode the JWT payload
+    const now = Math.floor(Date.now() / 1000);
+    return payload.exp && payload.exp > now; // Check expiration time
+  } catch (error) {
+    console.error("Invalid token format:", error);
+    return false;
+  }
+}
+async function fetchProfile() {
+  const token = localStorage.getItem("token"); // Retrieve token from localStorage
+
+  if (!token) {
+    alert("You are not logged in.");
+    return;
+  }
+
+  try {
+    const response = await fetch("http://localhost:5000/api/profile", {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch profile. Please log in again.");
+    }
+
+    const data = await response.json();
+
+    // Display the profile data
+    const profileContainer = document.getElementById("profileContainer");
+    profileContainer.innerHTML = `
+      <p>Message: ${data.message}</p>
+      <p>User ID: ${data.userId}</p>
+    `;
   } catch (error) {
     alert(error.message);
   }
 }
+
+// Attach the function to the button
+document.getElementById("fetchProfileButton").addEventListener("click", fetchProfile);
+
 
 // REGISTER FUNCTION
 async function registerUser() {
@@ -100,6 +159,7 @@ function logoutUser() {
   updateAuthUI();
 }
 
+// EVENT LISTENERS
 loginBtn.addEventListener("click", () => {
   loginModal.classList.remove("hidden");
 });

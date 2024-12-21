@@ -16,14 +16,16 @@
         <button id="new-post-btn" class="hidden">New Post</button>
         <button id="logout-btn" class="auth-btn hidden">Logout</button>
       </div>
+      <div>
+        <button id="fetchProfileButton">Load Profile</button>
+        <div id="profileContainer"></div>
+      </div>
     </header>
-
+ 
     <main>
       <div id="posts" class="posts-container"></div>
       <div id="loader" class="hidden">Loading...</div>
     </main>
-
-    <!-- Modal -->
     <div id="modal" class="modal hidden">
       <div class="modal-content">
         <span class="close-btn">&times;</span>
@@ -72,8 +74,6 @@
       </div>
     </div>
 
-    <script src="config.js" type="module"></script>
     <script src="script.js" type="module"></script>
-    <script src="./services/posts.js" type="module"></script>
   </body>
 </html>

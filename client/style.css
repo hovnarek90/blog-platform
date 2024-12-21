@@ -20,6 +20,7 @@ body {
   padding: 0;
   background-color: var(--bodyColor);
 }
+
 #loader {
   position: fixed;
   top: 50%;
@@ -52,10 +53,9 @@ header a {
   text-decoration: none;
   font-size: 2rem;
   font-weight: bold;
-  cursor: pointer;  
+  cursor: pointer;
 }
 
-/* Login/Logout button styles */
 .close-btn,
 .close-login-btn,
 .close-register-btn {

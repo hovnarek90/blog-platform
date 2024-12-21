@@ -2,7 +2,7 @@
 import { API_URL, AUTH_URL } from "../services/config.js";
 
 // Generic function for making API calls
-export async function apiRequest(url, method = "GET", body = null, token = null) {
+ async function apiRequest(url, method = "GET", body = null, token = null) {
   const headers = { "Content-Type": "application/json" };
   if (token) headers["Authorization"] = `Bearer ${token}`;
 
@@ -18,3 +18,5 @@ export async function apiRequest(url, method = "GET", body = null, token = null)
   }
   return await response.json();
 }
+
+export { API_URL, AUTH_URL };
