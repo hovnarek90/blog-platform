@@ -4,7 +4,22 @@ const modalTitle = document.getElementById("modal-title");
 const postTitleInput = document.getElementById("post-title");
 const saveBtn = document.getElementById("save-btn");
 const postContentInput = document.getElementById("post-content");
+const postTitleLabel = document.getElementById("postTitleLabel");
+const postContentLabel = document.getElementById("postContentLabel");
+
 let currentPostId = null;
+
+function resetModal() {
+  modalTitle.textContent = "";
+  postTitleInput.value = "";
+  postContentInput.value = "";
+  postTitleInput.disabled = false;
+  postContentInput.disabled = false;
+  saveBtn.classList.remove("hidden");
+  postTitleInput.classList.remove("hidden");
+  postTitleLabel.classList.remove("hidden");
+  postContentLabel.classList.remove("hidden");
+}
 
 function openEditModal(id) {
   fetch(`${API_URL}/${id}`)
@@ -31,6 +46,22 @@ function closeModal() {
   postTitleInput.disabled = false;
   postContentInput.disabled = false;
   saveBtn.classList.remove("hidden");
+  resetModal();
 }
 
-export { openModal, closeModal, openEditModal };
+function openInfoModal(content) {
+  resetModal();
+  modal.classList.remove("hidden");
+  saveBtn.classList.add("hidden");
+  postTitleInput.classList.add("hidden");
+  postTitleInput.disabled = true;
+  postContentInput.disabled = true;
+  modalTitle.textContent = "Info";
+  postTitleInput.value = "";
+  postContentInput.value = content;
+
+  postTitleLabel.classList.add("hidden");
+  postContentLabel.classList.add("hidden");
+}
+
+export { openModal, closeModal, openEditModal, openInfoModal };

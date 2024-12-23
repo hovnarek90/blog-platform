@@ -15,13 +15,12 @@
         <button id="login-btn" class="auth-btn">Login</button>
         <button id="new-post-btn" class="hidden">New Post</button>
         <button id="logout-btn" class="auth-btn hidden">Logout</button>
+        <button id="fetchProfileButton" class="info-btn">more info</button>
       </div>
-      <div>
-        <button id="fetchProfileButton">Load Profile</button>
-        <div id="profileContainer"></div>
-      </div>
+
+      <div id="profileContainer" class="hidden"></div>
     </header>
- 
+
     <main>
       <div id="posts" class="posts-container"></div>
       <div id="loader" class="hidden">Loading...</div>
@@ -31,11 +30,11 @@
         <span class="close-btn">&times;</span>
         <h2 id="modal-title"></h2>
         <form id="post-form">
-          <label for="post-title">Title</label>
+          <label for="post-title" id="postTitleLabel">Title</label>
           <input type="text" id="post-title" required />
 
-          <label for="post-content">Content</label>
-          <textarea id="post-content" rows="5" required></textarea>
+          <label for="post-content" id="postContentLabel">Content</label>
+          <textarea id="post-content" rows="5" class="post-content" required></textarea>
 
           <button type="button" id="save-btn">Save</button>
         </form>

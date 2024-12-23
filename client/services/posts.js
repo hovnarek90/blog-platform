@@ -150,10 +150,10 @@ function setupEventListeners() {
       alert("Please log in first.");
       return;
     }
-
+  
     const title = postTitleInput.value.trim();
     const content = postContentInput.value.trim();
-
+  
     if (title && content) {
       if (currentPostId) {
         updatePost(currentPostId, { title, content });
@@ -162,6 +162,17 @@ function setupEventListeners() {
       }
     }
   });
+  
+  [postTitleInput, postContentInput].forEach((input) => {
+    input.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault(); 
+        saveBtn.click(); 
+      }
+    });
+  });
+  
+
 }
 
 

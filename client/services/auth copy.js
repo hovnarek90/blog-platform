@@ -1,5 +1,5 @@
 import { fetchPosts, openModal } from "./posts.js";
-import { AUTH_URL } from "../config.js";
+import { AUTH_URL, PROFILE_URL } from "../config.js";
 import { openInfoModal } from "./modal.js";
 
 let isAuthenticated = localStorage.getItem("token") !== null;
@@ -77,20 +77,18 @@ async function loginUser() {
   }
 }
 
-// Basic JWT token validation function
 function validateToken(token) {
   try {
-    const payload = JSON.parse(atob(token.split(".")[1])); // Decode the JWT payload
+    const payload = JSON.parse(atob(token.split(".")[1]));
     const now = Math.floor(Date.now() / 1000);
-    return payload.exp && payload.exp > now; // Check expiration time
+    return payload.exp && payload.exp > now;
   } catch (error) {
     console.error("Invalid token format:", error);
     return false;
   }
 }
-async function fetchProfile() {
-  const token = localStorage.getItem("token"); // Retrieve token from localStorage
-
+fetchProfileButton.addEventListener("click", async () => {
+  const token = localStorage.getItem("token");
   if (!token) {
     alert("You are not logged in.");
     return;
@@ -110,23 +108,12 @@ async function fetchProfile() {
     }
 
     const data = await response.json();
-
-    // Display the profile data
-    fetchProfileButton.addEventListener("click", () => {
-      openInfoModal(
-        `
-       ${data.message}
-        User ID: ${data.userId}`
-      );
-    });
+    console.log(data);
+    openInfoModal(`User ID: ${data.userId}`);
   } catch (error) {
     alert(error.message);
   }
-}
-
-// Attach the function to the button
-fetchProfileButton.addEventListener("click", fetchProfile);
-
+});
 // REGISTER FUNCTION
 async function registerUser() {
   const username = document.getElementById("register-username").value.trim();
@@ -146,12 +133,6 @@ async function registerUser() {
     const data = await response.json();
 
     if (response.ok) {
-      const response = await fetch(`${AUTH_URL}/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
-      const data = await response.json();
       localStorage.setItem("token", data.token);
       isAuthenticated = true;
       fetchPosts();
