@@ -1,14 +1,14 @@
 import { API_URL } from "../config.js";
-import { openModal, closeModal, openEditModal } from "./modal.js";
+import { openModal, closeModal } from "./modal.js";
 
 const postTitleInput = document.getElementById("post-title");
 const postsContainer = document.getElementById("posts");
 const postContentInput = document.getElementById("post-content");
 const saveBtn = document.getElementById("save-btn");
 const closeBtn = document.querySelector(".close-btn");
+const newPostBtn = document.getElementById("new-post-btn"); 
 
 let isAuthenticated = localStorage.getItem("token") ? true : false;
-console.log(isAuthenticated, localStorage.getItem("token"));
 let currentPostId = null;
 let isLoading = false;
 
@@ -28,18 +28,14 @@ function hideLoader() {
 }
 
 async function fetchPosts() {
-  let isAuthenticated = localStorage.getItem("token") ? true : false;
-
-  console.log(localStorage.getItem("token"));
-
   try {
     isLoading = true;
     showLoader();
     const response = await fetch(API_URL);
     if (!response.ok) throw new Error("Failed to fetch posts");
+    let isAuthenticated = localStorage.getItem("token") ? true : false;
 
     const posts = await response.json();
-    console.log(isAuthenticated);
     postsContainer.innerHTML = posts
       .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
       .map(
@@ -133,6 +129,24 @@ async function viewPost(id) {
   }
 }
 
+async function openEditModal(id) {
+  try {
+    const response = await fetch(`${API_URL}/${id}`);
+    if (!response.ok) throw new Error("Failed to fetch post details");
+
+    const post = await response.json();
+    currentPostId = id;
+    postTitleInput.value = post.title || "";
+    postContentInput.value = post.content || "";
+
+    saveBtn.textContent = "Update Post";
+    openModal("Edit Post", post);
+  } catch (error) {
+    console.error("Error in openEditModal:", error);
+    alert(`Error: ${error.message}`);
+  }
+}
+
 function setupEventListeners() {
   postsContainer.addEventListener("click", (e) => {
     const id = e.target.dataset.id;
@@ -145,38 +159,32 @@ function setupEventListeners() {
     }
   });
 
+  newPostBtn.addEventListener("click", () => {
+    currentPostId = null;
+    postTitleInput.value = "";
+    postContentInput.value = "";
+    saveBtn.textContent = "Save Post";
+    openModal("New Post");
+  });
+
   saveBtn.addEventListener("click", () => {
-    if (!isAuthenticated) {
-      alert("Please log in first.");
-      return;
-    }
-  
     const title = postTitleInput.value.trim();
     const content = postContentInput.value.trim();
-  
-    if (title && content) {
-      if (currentPostId) {
-        updatePost(currentPostId, { title, content });
-      } else {
-        createPost({ title, content });
-      }
+
+    if (!title || !content) {
+      alert("Both title and content are required.");
+      return;
+    }
+
+    if (currentPostId) {
+      updatePost(currentPostId, { title, content });
+    } else {
+      createPost({ title, content });
     }
   });
-  
-  [postTitleInput, postContentInput].forEach((input) => {
-    input.addEventListener("keydown", (event) => {
-      if (event.key === "Enter") {
-        event.preventDefault(); 
-        saveBtn.click(); 
-      }
-    });
-  });
-  
 
+  closeBtn.addEventListener("click", closeModal);
 }
-
-
-closeBtn.addEventListener("click", closeModal);
 
 export {
   fetchPosts,

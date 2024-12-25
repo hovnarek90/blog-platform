@@ -153,7 +153,7 @@ header a {
   background-color: #218838;
 }
 #login-modal .modal-content,
-#register-modal .modal-content {
+#registerModal .modal-content {
   width: 350px;
 }
 

@@ -54,20 +54,14 @@ async function loginUser() {
     const data = await response.json();
 
     if (response.ok) {
-      // Basic client-side token validation
       if (!data.token || !validateToken(data.token)) {
         throw new Error("Invalid token received from the server.");
       }
-
-      // Store token securely
       localStorage.setItem("token", data.token);
-
-      // Update UI or application state
       isAuthenticated = true;
       loginModal.classList.add("hidden");
       updateAuthUI();
     } else {
-      // Handle server error response
       const errorMessage = data.message || "Login failed. Please try again.";
       alert(errorMessage);
     }
@@ -76,20 +70,18 @@ async function loginUser() {
     alert(error.message || "An unexpected error occurred. Please try again.");
   }
 }
-
-// Basic JWT token validation function
 function validateToken(token) {
   try {
-    const payload = JSON.parse(atob(token.split(".")[1])); // Decode the JWT payload
+    const payload = JSON.parse(atob(token.split(".")[1]));
     const now = Math.floor(Date.now() / 1000);
-    return payload.exp && payload.exp > now; // Check expiration time
+    return payload.exp && payload.exp > now;
   } catch (error) {
     console.error("Invalid token format:", error);
     return false;
   }
 }
 async function fetchProfile() {
-  const token = localStorage.getItem("token"); // Retrieve token from localStorage
+  const token = localStorage.getItem("token");
 
   if (!token) {
     alert("You are not logged in.");
@@ -110,21 +102,15 @@ async function fetchProfile() {
     }
 
     const data = await response.json();
+    let isAuthenticated = localStorage.getItem("token") ? true : false;
+    console.log(isAuthenticated);
 
-    // Display the profile data
-    fetchProfileButton.addEventListener("click", () => {
-      openInfoModal(
-        `
-       ${data.message}
-        User ID: ${data.userId}`
-      );
-    });
+    openInfoModal(`${data.message} User ID: ${data.userId}`);
   } catch (error) {
     alert(error.message);
   }
 }
 
-// Attach the function to the button
 fetchProfileButton.addEventListener("click", fetchProfile);
 
 // REGISTER FUNCTION
@@ -155,6 +141,7 @@ async function registerUser() {
       localStorage.setItem("token", data.token);
       isAuthenticated = true;
       fetchPosts();
+      updateAuthUI();
       registerModal.classList.add("hidden");
     } else {
       throw new Error(data.message || "Registration failed");
@@ -190,6 +177,7 @@ closeLoginBtn.addEventListener("click", () => {
 closeRegisterBtn.addEventListener("click", () => {
   registerModal.classList.add("hidden");
 });
+
 
 registerSubmit.addEventListener("click", registerUser);
 loginSubmit.addEventListener("click", loginUser);

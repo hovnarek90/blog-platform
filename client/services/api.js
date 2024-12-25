@@ -1,7 +1,5 @@
 // api.js
 import { API_URL, AUTH_URL } from "../services/config.js";
-
-// Generic function for making API calls
  async function apiRequest(url, method = "GET", body = null, token = null) {
   const headers = { "Content-Type": "application/json" };
   if (token) headers["Authorization"] = `Bearer ${token}`;

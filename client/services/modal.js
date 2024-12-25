@@ -64,4 +64,5 @@ function openInfoModal(content) {
   postContentLabel.classList.add("hidden");
 }
 
+
 export { openModal, closeModal, openEditModal, openInfoModal };
