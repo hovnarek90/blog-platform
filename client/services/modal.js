@@ -6,6 +6,7 @@ const saveBtn = document.getElementById("save-btn");
 const postContentInput = document.getElementById("post-content");
 const postTitleLabel = document.getElementById("postTitleLabel");
 const postContentLabel = document.getElementById("postContentLabel");
+const modalContent = document.querySelector(".modal-content");
 
 let currentPostId = null;
 
@@ -63,6 +64,5 @@ function openInfoModal(content) {
   postTitleLabel.classList.add("hidden");
   postContentLabel.classList.add("hidden");
 }
-
 
 export { openModal, closeModal, openEditModal, openInfoModal };

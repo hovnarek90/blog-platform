@@ -169,6 +169,7 @@ registerBtn.addEventListener("click", () => {
 logoutBtn.addEventListener("click", logoutUser);
 newPostBtn.addEventListener("click", () => {
   openModal("New Post");
+  
 });
 
 closeLoginBtn.addEventListener("click", () => {

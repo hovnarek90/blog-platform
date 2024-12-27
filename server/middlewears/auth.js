@@ -1,11 +1,10 @@
 const auth = {
   token: null,
   login(username, password) {
-    // Simulate API call for authentication
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (username === "admin" && password === "password") {
-          this.token = "mocked-jwt-token"; // Simulated token
+          this.token = "mocked-jwt-token"; 
           resolve(this.token);
         } else {
           reject("Invalid credentials");
@@ -21,5 +20,4 @@ const auth = {
   },
 };
 
-// Export for use in other scripts
 export default auth;

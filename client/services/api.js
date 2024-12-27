@@ -1,4 +1,3 @@
-// api.js
 import { API_URL, AUTH_URL } from "../services/config.js";
  async function apiRequest(url, method = "GET", body = null, token = null) {
   const headers = { "Content-Type": "application/json" };
